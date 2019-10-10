@@ -1,6 +1,6 @@
 {
   "name": "emoji2base64png",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Converts unicode emoji in html with base64 inlined png images",
   "main": "index.js",
   "author": "w01fgang <sumin@unix-center.ru>",
