@@ -1,4 +1,8 @@
+const fs = require('fs');
+const path = require('path');
 const emojis = require('./emojis');
+
+const emojiDir = './images';
 
 let regxArr = [];
 const noExtra = s => s.replace(/\ufe0f|\u200d/gm, '');
@@ -34,20 +38,19 @@ const re = new RegExp(`(${regxArr.join('|')})`, 'g');
 regxArr = null;
 
 class Parser {
-  constructor(path) {
-    if (!path) {
-      throw new Error('You should pass images path as the parameter to the constructor');
-    }
-    this.path = path;
-  }
-
+  // eslint-disable-next-line class-methods-use-this
   parse(string) {
     if (!string) {
       return string;
     }
+
     return string.replace(
       re,
-      (a, b) => `<img draggable="false" class="emoji" src="${this.path + toCodePoint(noExtra(b))}.png">`);
+      (a, b) => {
+        const filePath = `${toCodePoint(noExtra(b))}.png`;
+        const encodedImage = fs.readFileSync(path.resolve(emojiDir, filePath), { encoding: 'base64' });
+        return `<img draggable="false" class="emoji" src="data:image/png;base64,${encodedImage}">`;
+      });
   }
 }
 
