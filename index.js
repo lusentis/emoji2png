@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const emojis = require('./emojis');
 
-const emojiDir = './images';
+const emojiDir = path.resolve(__dirname, 'images');
 
 let regxArr = [];
 const noExtra = s => s.replace(/\ufe0f|\u200d/gm, '');
@@ -48,7 +48,7 @@ class Parser {
       re,
       (a, b) => {
         const filePath = `${toCodePoint(noExtra(b))}.png`;
-        const encodedImage = fs.readFileSync(path.resolve(emojiDir, filePath), { encoding: 'base64' });
+        const encodedImage = fs.readFileSync(path.join(emojiDir, filePath), { encoding: 'base64' });
         return `<img draggable="false" class="emoji" src="data:image/png;base64,${encodedImage}">`;
       });
   }
