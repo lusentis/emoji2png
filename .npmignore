@@ -10,5 +10,4 @@
 config.gypi
 CVS
 npm-debug.log
-images
 *.test.js
